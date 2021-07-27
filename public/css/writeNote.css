@@ -1,0 +1,18 @@
+#cardHolder {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.cardItem {
+    width: 30%;
+    margin: 10px;
+}
+
+.cardItem a {
+    color: blue;
+}
+
+.select {
+    margin: 10px;
+}

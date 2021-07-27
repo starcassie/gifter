@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gifter</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+	  <link rel="stylesheet" href="css/writeNote.css">
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/8.3.1/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/8.3.1/firebase-auth.js"></script>
+    <script defer src="/__/firebase/8.3.1/firebase-database.js"></script>
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <script src="js/writeNote.js"></script>
+  </head>
+  <body>
+
+    <section class="hero is-fullheight">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <div class="columns is-8 is-variable ">
+
+            <!-- WELCOME HERO -->
+            <div class="column is-two-thirds has-text-left">
+              <h1 class="title is-1">Gifter</h1>
+              <h1 class="title is-3">
+                "For any forgetful wizards, use this magical tool to help you remember your friend's birthdays!"
+              </h1>
+              <h1 class="subtitle is-5">
+                — Jessie & Cassie
+              </h1>
+              <a><button class="button is-link has-text-weight-medium is-medium is-centered" onclick="openGifts()">View Gifts</button></a>
+            </div>
+
+            <!-- NOTE FORM -->
+            <div class="column is-one-third has-text-left">
+              <div class="field">
+                <label class="label">Gift</label>
+                <div class="control">
+                  <input class="input is-medium" type="text" id="gift">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Recipient</label>
+                <div class="control">
+                  <input class="input is-medium" type="text" id="recipient">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Birthday</label>
+                <div class="control">
+                  <input class="input is-medium" type="text" id="birthday">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Notes</label>
+                <div class="control">
+                  <textarea class="textarea is-medium" id="notes"></textarea>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Link</label>
+                <div class="control">
+                  <input class="input is-medium" id="link"></input>
+                </div>
+              </div>
+              <div class="control">
+                <button class="button is-link is-fullwidth has-text-weight-medium is-medium" onclick="handleNoteSubmit()">Create Note</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </body>
+</html>
