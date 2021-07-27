@@ -22,7 +22,7 @@ const handleNoteSubmit = () => {
   const currentDate = new Date();
   const dateString = (currentDate.getMonth() + 1) + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
   // formats the data and write it to our database
-  firebase.database().ref(`users/${googleUser.uid}`).push({
+  firebase.database().ref(`users/${googleUser.uid}/${recipient.value}`).push({
     gift: gift.value,
     notes: notes.value,
     created: dateString,
