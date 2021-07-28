@@ -26,14 +26,15 @@
 
             <!-- WELCOME HERO -->
             <div class="column is-two-thirds has-text-left">
-              <h1 class="title is-1">Gifter</h1>
+              <h1 class="title is-1" id="title">Gifter</h1>
               <h1 class="title is-3">
                 "For any forgetful wizards, use this magical tool to help you remember your friend's birthdays!"
               </h1>
               <h1 class="subtitle is-5">
                 — Jessie & Cassie
               </h1>
-              <a><button class="button is-link has-text-weight-medium is-medium is-centered" onclick="openGifts()">View Gifts</button></a>
+              <a><button class="button is-link has-text-weight-medium is-medium is-centered" onclick="openGifts()">view gifts</button></a>
+              <a><button class="button is-link has-text-weight-medium is-medium is-centered" onclick="signOut()">sign out</button></a>
             </div>
 
             <!-- NOTE FORM -->
@@ -66,6 +67,12 @@
                 <label class="label">Link</label>
                 <div class="control">
                   <input class="input is-medium" id="link"></input>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Color</label>
+                <div class="control">
+                  <input type="color" value="#ffffff" class="input is-medium" id="color"></input>
                 </div>
               </div>
               <div class="control">

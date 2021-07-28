@@ -4,6 +4,8 @@ window.onload = (event) => {
   // retaims the user state between html pages.
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+      const title = document.querySelector("#title");
+      title.innerHTML = user.displayName + "'s Gifter";
       console.log('Logged in as: ' + user.displayName);
       googleUser = user;
     } else {
@@ -19,6 +21,7 @@ const handleNoteSubmit = () => {
   const recipient = document.querySelector('#recipient');
   const link = document.querySelector('#link');
   const birthday = document.querySelector('#birthday');
+  const color = document.querySelector('#color');
   const currentDate = new Date();
   const dateString = (currentDate.getMonth() + 1) + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
   // formats the data and write it to our database
@@ -28,7 +31,8 @@ const handleNoteSubmit = () => {
     created: dateString,
     recipient: recipient.value,
     link: link.value,
-    birthday: birthday.value
+    birthday: birthday.value,
+    color: color.value
   })
   // clears the form so that we can write a new note
   .then(() => {
@@ -37,10 +41,21 @@ const handleNoteSubmit = () => {
     recipient.value = "";
     link.value = "";
     birthday.value = "";
+    color.value = "#ffffff";
   });
 };
 
 function openGifts() {
     // takes the user to the gift page
     window.location = "gifts.html";
+}
+
+function signOut() {
+   firebase.auth().signOut()
+	
+   .then(function() {
+      console.log('Signout Succesfull')
+   }, function(error) {
+      console.log('Signout Failed')  
+   });
 }
