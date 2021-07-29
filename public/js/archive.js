@@ -8,7 +8,7 @@ window.onload = event => {
             console.log(userG);
             console.log('Logged in as: ' + user.displayName);
             const googleUserId = user.uid;
-            const giftsRef = firebase.database().ref(`users/${googleUserId}/active`);
+            const giftsRef = firebase.database().ref(`users/${googleUserId}/in-active`);
             giftsRef.on("value", (snapshot) => {
                 const gifts = snapshot.val();
                 makeCard(gifts);
@@ -57,8 +57,7 @@ function makeCard(gifts) {
                         <p class="title is-5">tracked on: ${gifts[person][gift].created}</p>
                         <a class="title is-5" href="${gifts[person][gift].link}">link</a>
                         <br />
-                        <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="editCard('${gifts[person][gift].recipient}', '${gift}')">edit</button>
-                        <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="archiveCard('${gifts[person][gift].recipient}', '${gift}')">archive</button>
+                        <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="unarchiveCard('${gifts[person][gift].recipient}', '${gift}')">unarchive</button>
                         <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="deleteCard('${gifts[person][gift].recipient}', '${gift}')">delete</button>
                     </div>
                 </div> 
@@ -87,8 +86,7 @@ function makeCardPerson(gifts, person) {
                     <p class="title is-5">tracked on: ${gifts[person][gift].created}</p>
                     <a class="title is-5" href="${gifts[person][gift].link}">link</a>
                     <br />
-                    <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="editCard('${gifts[person][gift].recipient}', '${gift}')">edit</button>
-                    <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="archiveCard('${gifts[person][gift].recipient}', '${gift}')">archive</button>
+                    <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="unarchiveCard('${gifts[person][gift].recipient}', '${gift}')">unarchive</button>
                     <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="deleteCard('${gifts[person][gift].recipient}', '${gift}')">delete</button>
                 </div>
             </div> 
@@ -102,9 +100,9 @@ function back() {
     window.location = "writeNote.html";
 }
 
-function viewArchive() {
+function viewActive() {
     // takes them back to the write note page
-    window.location = "archive.html";
+    window.location = "gifts.html";
 }
 
 function filter() {
@@ -113,7 +111,7 @@ function filter() {
     const select = document.querySelector('#holdsOptions');
     const person = select.options[select.selectedIndex].value;
     const googleUserId = userG.uid;
-    const giftsRef = firebase.database().ref(`users/${googleUserId}/active`);
+    const giftsRef = firebase.database().ref(`users/${googleUserId}/in-active`);
     giftsRef.on("value", (snapshot) => {
         const gifts = snapshot.val();
         if (person === "all") {
@@ -127,14 +125,14 @@ function filter() {
 function deleteCard(person, id) {
     // deletes card
     const googleUserId = userG.uid;
-    const giftsRef = firebase.database().ref(`users/${googleUserId}/active`);
+    const giftsRef = firebase.database().ref(`users/${googleUserId}/in-active`);
     giftsRef.on("value", (snapshot) => {
         const gifts = snapshot.val();
         if (Object.keys(gifts[person]).length === 1) {
-            firebase.database().ref(`users/${googleUserId}/active/${person}/${id}`).remove();
+            firebase.database().ref(`users/${googleUserId}/in-active/${person}/${id}`).remove();
             filter("all")
         } else {
-            firebase.database().ref(`users/${googleUserId}/active/${person}/${id}`).remove();
+            firebase.database().ref(`users/${googleUserId}/in-active/${person}/${id}`).remove();
         }
     })
 }
@@ -150,64 +148,11 @@ function changeFont() {
     }
 }
 
-function editCard(person, id) {
-    console.log(person + id);
-    const googleUserId = userG.uid;
-    const notesRef = firebase.database().ref(`users/${googleUserId}/active/${person}`);
-    notesRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        const details = data[id];
-        document.querySelector('#gift').value = details.gift;
-        document.querySelector('#recipient').value = details.recipient;
-        document.querySelector('#birthday').value = details.birthday;
-        document.querySelector('#notes').value = details.notes;
-        document.querySelector('#link').value = details.link;
-        document.querySelector('#color').value = details.color;
-
-    });
-    editNoteModal.classList.toggle('is-active');
-    const saveEditBtn = document.querySelector('#saveEdit');
-    saveEditBtn.onclick = handleSaveEdit.bind(this, person, id);
-
-}
-
-function handleSaveEdit(person, id) {
-    console.log("clicked");
-    const gift = document.querySelector('#gift');
-    const notes = document.querySelector('#notes');
-    const recipient = document.querySelector('#recipient');
-    const link = document.querySelector('#link');
-    const birthday = document.querySelector('#birthday');
-    const color = document.querySelector('#color');
-    const currentDate = new Date();
-    if (recipient.value == "") {
-        alert("you need a recipient");
-    } else {
-        const dateString = (currentDate.getMonth() + 1) + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
-        // formats the data and write it to our database
-        if (person != recipient.value) {
-            deleteCard(person, id)
-        }
-        firebase.database().ref(`users/${userG.uid}/active/${recipient.value}/${id}`).set({
-            gift: gift.value,
-            notes: notes.value,
-            created: dateString,
-            recipient: recipient.value,
-            link: link.value,
-            birthday: birthday.value,
-            color: color.value
-        })
-        console.log(editNoteModal.classList);
-        editNoteModal.classList.toggle('is-active');
-        console.log(editNoteModal.classList);
-    }
-}
-
-function archiveCard(person, id) {
-    const giftsRef = firebase.database().ref(`users/${userG.uid}/active/${person}`);
+function unarchiveCard(person, id) {
+    const giftsRef = firebase.database().ref(`users/${userG.uid}/in-active/${person}`);
     giftsRef.on("value", (snapshot) => {
         const gifts = snapshot.val();
-        firebase.database().ref(`users/${userG.uid}/in-active/${gifts[id].recipient}`).push({
+        firebase.database().ref(`users/${userG.uid}/active/${gifts[id].recipient}`).push({
             gift: gifts[id].gift,
             notes: gifts[id].notes,
             created: gifts[id].created,
@@ -218,8 +163,4 @@ function archiveCard(person, id) {
         })
     })
     deleteCard(person, id)
-}
-
-function closeEditModal() {
-    editNoteModal.classList.toggle('is-active');
 }

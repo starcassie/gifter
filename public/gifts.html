@@ -27,6 +27,7 @@
             </div>
             <br />
             <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="back()">go back to gift entry</button>
+            <button class="button is-link has-text-weight-medium is-medium is-centered" onclick="viewArchive()">view archived notes</button>
             <br />
             <div class="select">
                 <select id="holdsOptions" onchange="filter()">
@@ -37,6 +38,54 @@
           </div>
       </div>
     </section>
-
+    <div id="editNoteModal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <section class="modal-card-body">
+                <div class="field">
+                <label class="label">Gift</label>
+                <div class="control">
+                  <input class="input is-medium" type="text" id="gift">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Recipient</label>
+                <div class="control">
+                  <input class="input is-medium" type="text" id="recipient">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Birthday</label>
+                <div class="control">
+                  <input class="input is-medium" type="text" id="birthday">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Notes</label>
+                <div class="control">
+                  <textarea class="textarea is-medium" id="notes"></textarea>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Link</label>
+                <div class="control">
+                  <input class="input is-medium" id="link"></input>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Color</label>
+                <div class="control">
+                  <input type="color" value="#ffffff" class="input is-medium" id="color"></input>
+                </div>
+              </div>
+            </section>
+            <footer class="modal-card-foot">
+            <button class="button is-success" id="saveEdit">
+                Save changes
+            </button>
+            <button class="button" onclick="closeEditModal()">Cancel</button>
+            </footer>
+        </div>
+    </div>
   </body>
 </html>
