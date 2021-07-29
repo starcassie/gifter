@@ -1,5 +1,5 @@
 let googleUser;
-
+print("test")
 window.onload = (event) => {
   // retaims the user state between html pages.
   firebase.auth().onAuthStateChanged(function(user) {
