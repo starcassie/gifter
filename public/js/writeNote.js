@@ -5,8 +5,10 @@ window.onload = (event) => {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       const title = document.querySelector("#title");
-      title.innerHTML = user.displayName + "'s Gifter";
-      console.log('Logged in as: ' + user.displayName);
+      if (user.displayName != null) {
+        title.innerHTML = user.displayName + "'s Gifter";
+        console.log('Logged in as: ' + user.displayName);
+      }
       googleUser = user;
     } else {
       window.location = 'index.html'; // if not logged in, navigate back to login page.
