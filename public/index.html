@@ -46,24 +46,27 @@
                                 Sign In
                             </a>
                         </p>
-                                      <div id="recaptcha-container"></div>
+                                     
 
               <form>
                 <input
                   type="text"
                   id="phoneNumber"
-                  placeholder="Enter your phone number!"
+                  placeholder="Enter phone number!"
+                  class="input is-info"
+                  style="width: 50%; margin:30px"
                 />
               </form>
-              <button id="getCode">
+              <button id="getCode" class="button is-info is-light">
                 Get verification code
               </button>
-              <button id="signInWithPhone">
+              <button id="signInWithPhone" class="button is-success is-light">
                 Submit code
               </button>
               <form>
-                <input type="text" id="code" placeholder="Enter your code!" />
+                <input type="text" id="code" placeholder="Enter your code!" class="input is-info" style="width: 50%; margin: 30px"/>
               </form>
+               <div id="recaptcha-container" style="position: absolute; left: 38%"></div>
                     </div>
                 </div>
             </div>
